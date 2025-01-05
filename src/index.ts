@@ -1,10 +1,15 @@
 import express from "express"
 const app = express()
+app.use(express.json())
+app.set('view engine', 'ejs')
+app.set('views', 'src/views')
 
 app.get("/", (req, res) => {
-    res.send("Hello World!")
+    res.render("index")
 })
-
-app.listen(process.env.PORT || 3000, () => {
+app.get("/embed", (req,res) => {
     
+})
+app.listen(process.env.PORT || 3000, () => {
+    console.log("Im up bucko")
 })
