@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> High Seas v2</title>
+    <%- include('./partials/head.ejs') -%>
     <!-- TODO: import tw and daisyui and catppuccin -->
      <!-- display stuff ;p -->
-
 <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css" rel="stylesheet" type="text/css" />
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -18,12 +18,12 @@
             <p class="py-6">
            Yet another high seas client...
             </p>
-            <a  href="" class="btn btn-primary">Shipyard</a>
-            <a  href="" class="btn btn-primary">Wonderdome</a>
-            <a  href="" class="btn btn-primary">Wonderdome (the other better one)</a>
-            <a  href="" class="btn btn-primary">Shop</a>
-            <a  href="" class="btn btn-primary">Leaderboard</a>
-            <a  href="" class="btn btn-primary">Shipment viewer</a>
+            <a  href="/shipyard" class="btn btn-primary">Shipyard</a>
+            <a  href="/wonderdome" class="btn btn-primary">Wonderdome</a>
+            <a  href="/better-wonderdome" class="btn btn-primary">Wonderdome (the other better one)</a>
+            <a  href="/shop" class="btn btn-primary">Shop</a>
+            <a  href="/embed-leaderboard" class="btn btn-primary">Leaderboard</a>
+            <a  href="/shipment-viewer" class="btn btn-primary">Shipment viewer</a>
           </div>
         </div>
       </div>

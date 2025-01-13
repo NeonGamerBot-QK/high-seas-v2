@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed - <%=title%></title>
+    <%- include('./partials/head.ejs') -%>
+    <!-- TODO: import tw and daisyui and catppuccin -->
+     <!-- display stuff ;p -->
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="bg-base-200 min-h-screen">
+        <div class="pt-10 text-center">
+          <div>
+            <h1 class="text-5xl font-bold"><%=title%></h1>
+           <iframe src="<%=url%>" style="width: 100vw;height: 90vh;" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

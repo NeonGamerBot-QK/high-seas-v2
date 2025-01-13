@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+    <%- include('./partials/head.ejs') -%>
+    <!-- TODO: import tw and daisyui and catppuccin -->
+     <!-- display stuff ;p -->
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    const REQ_ID="<%=req_id%>"
+</script>
+</head>
+<body>
+    <div class="bg-base-200 min-h-screen">
+        <div class="pt-10 text-center">
+          <div>
+            <h1 class="text-5xl font-bold">Shipment viewer??</h1>
+            <div id="loading">
+                <span className="loading loading-spinner loading-lg"></span>
+            </div>
+            <div id="login-to-shipment-viewer" class="hidden">
+                <h2 class="text-2xl mt-10 font-bold">Login to shipment viewer</h2>
+                <p class="py-10"> Gimmie your email so u can then give me your signature orrr just give me ur signature rn bucko</p>
+                <div class="form-control">
+                    <label class="label">
+                        Email to send url to:
+                    </label>
+                    <input type="email" class="input input-bordered" placeholder="Email" id="email-input">
+                    <button class="btn btn-primary" id="send-email">Send email</button>
+                </div>
+            </div>
+            <div class="hidden" id="if-ur-in"></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        if(!localStorage.getItem("shipment-viewer-url")) {
+            document.querySelector('#send-email').addEventListener('click', async () => {
+                fetch("/shipment/sendemail", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        email: document.querySelector("#email-input").value
+                    })
+                })
+            })
+            document.getElementById("login-to-shipment-viewer").classList.remove("hidden")
+
+        } else {
+            // uhhhhh
+        }
+        document.getElementById("loading").remove()
+      </script>
+</body>
+</html>
