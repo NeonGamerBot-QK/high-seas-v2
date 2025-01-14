@@ -40,10 +40,15 @@ app.get('/shipment-viewer', (req,res) => {
     })
 })
 app.post('/shipment/sendemail',validateReq, async (req,res) => {
+    
     const email = req.body.email 
+    if(!email) {
+        res.status(400).send({error: "No email provided", new_code: getReqId()})
+    return;
+}
     sendEmail(email).then(r => {
-        if(r.error) res.status(500).send(r.error)
-        else res.send("ok")
+        if(r.error) res.status(500).send({ error: r.error, new_code: getReqId()})
+        else res.send({ error: null, new_code: getReqId() })
     })
 })
 app.listen(process.env.PORT || 3000, () => {

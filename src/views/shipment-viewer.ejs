@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css" rel="stylesheet" type="text/css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-    const REQ_ID="<%=req_id%>"
+    var REQ_ID="<%=req_id%>"
 </script>
 </head>
 <body>
@@ -39,19 +39,27 @@
       <script>
         if(!localStorage.getItem("shipment-viewer-url")) {
             document.querySelector('#send-email').addEventListener('click', async () => {
-                fetch("/shipment/sendemail", {
+                fetch("./shipment/sendemail", {
                     method: "POST",
+                    headers: {
+                        "x-request-id": REQ_ID
+                    },
                     body: JSON.stringify({
                         email: document.querySelector("#email-input").value
                     })
                 })
             })
             document.getElementById("login-to-shipment-viewer").classList.remove("hidden")
-
         } else {
-            // uhhhhh
+// load it obvs
+fetch(localStorage.getItem("shipment-viewer-url")).then(r=>r.json()).then((json) => {
+    console.log(json)
+    // a rare
+    debugger;
+})
         }
         document.getElementById("loading").remove()
       </script>
 </body>
+
 </html>
