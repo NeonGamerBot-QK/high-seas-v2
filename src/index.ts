@@ -39,6 +39,16 @@ app.get('/shipment-viewer', (req,res) => {
         req_id: getReqId()
     })
 })
+app.get('/api/shipmentviewer', async (req,res) => {
+    const email = req.query.email
+    const sig = req.query.sig
+    if(!email || !sig) {
+        res.status(400).send({error: "No email or sig provided", new_code: getReqId()})
+    return;
+}
+// just make the req :3 
+ fetch(`https://shipment-viewer.hackclub.com/dyn/jason/${email}?email=${encodeURIComponent(email as string)}&signature=${sig}`).then(r=>r.json()).then(j => res.json(j))
+})
 app.post('/shipment/sendemail',validateReq, async (req,res) => {
     
     const email = req.body.email 

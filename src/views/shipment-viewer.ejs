@@ -21,22 +21,45 @@
             <div id="loading">
                 <span className="loading loading-spinner loading-lg"></span>
             </div>
-            <div id="login-to-shipment-viewer" class="hidden">
-                <h2 class="text-2xl mt-10 font-bold">Login to shipment viewer</h2>
-                <p class="py-10"> Gimmie your email so u can then give me your signature orrr just give me ur signature rn bucko</p>
-                <div class="form-control">
-                    <label class="label">
-                        Email to send url to:
-                    </label>
-                    <input type="email" class="input input-bordered" placeholder="Email" id="email-input">
-                    <button class="btn btn-primary" id="send-email">Send email</button>
+           
+            <div  id="login-to-shipment-viewer" class="flex w-full flex-col border-opacity-50 hidden">
+                <div class="card rounded-box grid w-200 place-items-center">
+                    <div >
+                        <h2 class="text-2xl mt-10 font-bold">Login to shipment viewer</h2>
+                        <p class="py-10"> Gimmie your email so u can then give me your signature orrr just give me ur signature rn bucko</p>
+                        <div class="form-control">
+                            <label class="label">
+                                Email to send url to:
+                            </label>
+                            <input type="email" class="input input-bordered" placeholder="Email" id="email-input">
+                            <button class="btn btn-primary" id="send-email">Send email</button>
+                        </div>
+                    
+                    </div>
+                </div>
+                <div class="divider">OR</div>
+                <div class="card rounded-box grid place-items-center w-200">      <div >
+                    <p class="py-10"> Your JSON shipment url...</p>
+                    <div class="form-control">
+                        <label class="label">
+                            Your shipment URL (JSON)
+                        </label>
+                        <input type="email" class="input input-bordered" placeholder="https://shipment-viewer.hackclub.com/dyn/jason/dino@hackclub.com?email=dino%40hackclub.com&signature=..." id="shipment-url-input">
+                        <button class="btn btn-primary" id="add-shipment-url">Send URL</button>
+                    </div>
+                
+                </div></div>
+              </div>
+            <div class="hidden" id="if-ur-in">
+                <div class="grid flex gap-3 grid-cols-3" id="shipment-viewer">
+
                 </div>
             </div>
-            <div class="hidden" id="if-ur-in"></div>
           </div>
         </div>
       </div>
       <script>
+
         if(!localStorage.getItem("shipment-viewer-url")) {
             document.querySelector('#send-email').addEventListener('click', async () => {
                 fetch("./shipment/sendemail", {
@@ -49,16 +72,36 @@
                     })
                 })
             })
+            document.querySelector('#add-shipment-url').addEventListener('click', async () => {
+                localStorage.setItem("shipment-viewer-url", document.querySelector("#shipment-url-input").value)
+                location.reload()
+            })
             document.getElementById("login-to-shipment-viewer").classList.remove("hidden")
+            document.getElementById("loading").remove()
         } else {
 // load it obvs
-fetch(localStorage.getItem("shipment-viewer-url")).then(r=>r.json()).then((json) => {
+// update: THERE IS CORS NOOOO
+const params = new URLSearchParams(new URL(localStorage.getItem("shipment-viewer-url")).search)
+fetch(`/api/shipmentviewer?sig=${params.get("signature")}&email=${params.get("email")}`).then(r=>r.json()).then((json) => {
+    // console.log(json)
     console.log(json)
-    // a rare
-    debugger;
+    for(const shipment of json) {
+        console.log(shipment)
+        const cardDiv = document.createElement('div')
+        cardDiv.className = `card bg-base-300 p-2 w-96`
+        const h2 = document.createElement('h2')
+        h2.innerText = `${shipment.icon} - ${shipment.title}`
+        const p = document.createElement('p')
+        p.className = ``
+        p.innerText = typeof shipment.description == 'string' ? shipment.description : shipment.description?.join(',\n')
+        cardDiv.appendChild(h2)
+        cardDiv.appendChild(p)
+        document.getElementById("shipment-viewer").appendChild(cardDiv)
+        
+    }
+    document.getElementById("if-ur-in").classList.remove("hidden")
 })
         }
-        document.getElementById("loading").remove()
       </script>
 </body>
 
